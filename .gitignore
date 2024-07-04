@@ -14,5 +14,6 @@ db.sqlite3
 .env
 
 # Ignorar diretório de ambiente virtual
-*.venv/
+.venv/
 *venv/
+*venv
