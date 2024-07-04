@@ -1,0 +1,17 @@
+# Python
+*.pyc
+__pycache__/
+
+# Django
+*.log
+db.sqlite3
+
+# IDEs
+.vscode/
+.idea/
+
+# Ignorar configurações específicas do ambiente
+.env
+
+# Ignorar diretório de ambiente virtual
+.venv/

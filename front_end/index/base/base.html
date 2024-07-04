@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% include 'struct_html/meta_tag.html' %}
+</head>
+
+<body class="defult-home">
+
+	<div class="offwrap"></div>
+
+	<div id="pre-load">
+		{% include 'struct_html/preloader.html' %}
+	</div>
+
+	<div class="main-content">
+		<div class="full-width-header">
+			<header id="rs-header" class="rs-header">{% include 'struct_html/header.html' %}</header>
+		</div>
+
+		<div class="rs-breadcrumbs img3">
+			{% include 'struct_html/breadcrumbs.html' %}
+		</div>
+
+		<div class="rs-inner-blog pt-120 pb-105 md-pt-80 md-pb-80">
+			{% include 'index/index.html' %}
+		</div>
+
+	</div>
+
+	<footer id="rs-footer" class="rs-footer footer-main-home">
+		{% include 'struct_html/footer.html' %}
+		<div id="scrollUp">
+			{% include 'struct_html/scrollUp.html' %}
+		</div>
+
+		<div aria-hidden="true" class="modal fade search-modal" role="dialog" tabindex="-1">
+			{% include 'struct_html/search_modal.html' %}
+		</div>
+
+		{% include 'struct_html/script.html' %}
+</body>
+
+</html>
