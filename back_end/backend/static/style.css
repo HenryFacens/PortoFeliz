@@ -55,7 +55,15 @@
   --secondary-color: #36599a;  */
   --primary-color: #94AC3C; /* Initial primary color */
   --secondary-color: white; /* Initial secondary color */
+  --blue-color : #10316b;
 }
+
+/* Custom colors */
+
+.blue-color {
+  background-color: #10316b;
+}
+
 /* -----------------------------------
 	01. General CSS
 -------------------------------------*/
