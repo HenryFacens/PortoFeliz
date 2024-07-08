@@ -1,37 +1,49 @@
 from rest_framework import serializers
-from .models import Usuario, Proposta, Feedback, Geolocalizacao, Categoria, Tag, Noticia
+from django.contrib.auth.models import Group, Permission
+from .models import User, Sector, Interaction, Feedback, AdminUser
 
-class UsuarioSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Usuario
-        fields = '__all__'
+        model = User
+        fields = ['id', 'username', 'email', 'join_date', 'groups', 'user_permissions']
 
-class PropostaSerializer(serializers.ModelSerializer):
+class SectorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Proposta
-        fields = '__all__'
+        model = Sector
+        fields = ['id', 'name', 'lat', 'lgn', 'description', 'created_at', 'updated_at']
+
+class InteractionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interaction
+        fields = ['id', 'like_dislike', 'created_at', 'updated_at']
 
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
-        fields = '__all__'
+        fields = ['id', 'sector', 'interaction', 'full_name', 'phone', 'comment', 'created_at', 'updated_at']
 
-class GeolocalizacaoSerializer(serializers.ModelSerializer):
+class AdminUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Geolocalizacao
-        fields = '__all__'
+        model = AdminUser
+        fields = ['id', 'user', 'first_name', 'last_name', 'password', 'permissions', 'active', 'description', 'created_at', 'updated_at']
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
-class CategoriaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Categoria
-        fields = '__all__'
+    def create(self, validated_data):
+        admin_user = AdminUser(**validated_data)
+        admin_user.set_password(validated_data['password'])
+        admin_user.save()
+        return admin_user
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = '__all__'
-
-class NoticiaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Noticia
-        fields = '__all__'
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        password = validated_data.get('password')
+        if password:
+            instance.set_password(password)
+        instance.permissions = validated_data.get('permissions', instance.permissions)
+        instance.active = validated_data.get('active', instance.active)
+        instance.description = validated_data.get('description', instance.description)
+        instance.save()
+        return instance
