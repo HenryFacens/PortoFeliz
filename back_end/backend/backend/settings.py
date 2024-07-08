@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-8_7+2o%a(-+17801qia1142#(*d%tee0@jo&5yv%5)hz7#xvq=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     # Custom apps
     'api',
     'frontend',
+    'rest_framework',
+    'drf_yasg',
     
 ]
 
@@ -70,10 +72,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'CidadaniaClaraDB',
+        'USER': 'postgres',
+        'PASSWORD': 'Nescau1/*-',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
