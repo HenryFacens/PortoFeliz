@@ -3,7 +3,11 @@ from django.views.generic import View
 from rest_framework import viewsets
 from .models import User, Sector, Interaction, Feedback, AdminUser
 from .serializers import UserSerializer, SectorSerializer, InteractionSerializer, FeedbackSerializer, AdminUserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from api import serializers as api_serializers
 
+class UserTokenSerializer(TokenObtainPairView):
+    serializer_class = api_serializers.UserTokenSerializer
 
 class IndexView(View):
     def get(self, request):
