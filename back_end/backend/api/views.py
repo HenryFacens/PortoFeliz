@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import View
 from rest_framework import viewsets
-from .models import Usuario, Proposta, Feedback, Geolocalizacao, Categoria, Tag, Noticia
-from .serializers import UsuarioSerializer, PropostaSerializer, FeedbackSerializer, GeolocalizacaoSerializer, CategoriaSerializer, TagSerializer, NoticiaSerializer
+from .models import User, Sector, Interaction, Feedback, AdminUser
+from .serializers import UserSerializer, SectorSerializer, InteractionSerializer, FeedbackSerializer, AdminUserSerializer
 
 
 class IndexView(View):
@@ -12,31 +12,23 @@ class IndexView(View):
 class MapView(View):
     def get(self, request):
         return render(request, 'map/base/base.html')
+    
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-class UsuarioViewSet(viewsets.ModelViewSet):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
+class SectorViewSet(viewsets.ModelViewSet):
+    queryset = Sector.objects.all()
+    serializer_class = SectorSerializer
 
-class PropostaViewSet(viewsets.ModelViewSet):
-    queryset = Proposta.objects.all()
-    serializer_class = PropostaSerializer
+class InteractionViewSet(viewsets.ModelViewSet):
+    queryset = Interaction.objects.all()
+    serializer_class = InteractionSerializer
 
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
-class GeolocalizacaoViewSet(viewsets.ModelViewSet):
-    queryset = Geolocalizacao.objects.all()
-    serializer_class = GeolocalizacaoSerializer
-
-class CategoriaViewSet(viewsets.ModelViewSet):
-    queryset = Categoria.objects.all()
-    serializer_class = CategoriaSerializer
-
-class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
-
-class NoticiaViewSet(viewsets.ModelViewSet):
-    queryset = Noticia.objects.all()
-    serializer_class = NoticiaSerializer
+class AdminUserViewSet(viewsets.ModelViewSet):
+    queryset = AdminUser.objects.all()
+    serializer_class = AdminUserSerializer

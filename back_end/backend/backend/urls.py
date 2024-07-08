@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+
+# Api
 from api import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
+from rest_framework import routers
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -20,13 +22,12 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r'usuarios', views.UsuarioViewSet)
-router.register(r'propostas', views.PropostaViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'sectors', views.SectorViewSet)
+router.register(r'interactions', views.InteractionViewSet)
 router.register(r'feedbacks', views.FeedbackViewSet)
-router.register(r'geolocalizacoes', views.GeolocalizacaoViewSet)
-router.register(r'categorias', views.CategoriaViewSet)
-router.register(r'tags', views.TagViewSet)
-router.register(r'noticias', views.NoticiaViewSet)
+router.register(r'adminusers', views.AdminUserViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,3 +39,6 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
 ]
+
+
+ 
