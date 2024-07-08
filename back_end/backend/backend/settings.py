@@ -118,3 +118,101 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    # Título do site que aparece na aba do navegador
+    "site_title": "Cidadania Trasnparente",
+
+    # Título do cabeçalho do site
+    "site_header": "Cidadania Trasnparente",
+
+    # Marca do site que aparece na barra lateral
+    "site_brand": "Cidadania Trasnparente",
+
+    # Slogan de boas-vindas na página de login
+    "welcome_sign": "Bem-vindo ao Portal de Cidadania Transparência",
+
+    # Direitos autorais que aparecem no rodapé
+    "copyright": "Presturion Solutions",
+
+    # Modelo de busca padrão usado no painel admin
+    "search_model": "auth.User",
+
+    # Campo do modelo de usuário para exibir avatar
+    "user_avatar": None,
+
+    # URL do logo do site (caminho para o arquivo logo)
+    # "site_logo": "core/images/logo.png",
+
+    # URL do ícone do site (favicon)
+    # "site_icon": "core/images/favicon.ico",
+
+    # Texto do menu no canto superior direito
+    # "topmenu_links": [
+    #     {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+    #     {"name": "Support", "url": "https://support.example.com", "new_window": True},
+    # ],
+
+    # Links rápidos exibidos no dashboard
+    # "usermenu_links": [
+    #     {"name": "Support", "url": "https://support.example.com", "new_window": True},
+    #     {"model": "auth.user"},
+    # ],
+
+    # Mostrar construtor de interface de usuário
+    "show_ui_builder": True,
+
+    # Ícone de um modelo (exemplo: auth)
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+
+    # Modelo de menu (link, URL, permissões)
+    # "nav_links": [
+    #     {"name": "Documentation", "url": "https://docs.example.com", "permissions": ["auth.view_user"]},
+    # ],
+
+    # Tweaks de interface de usuário
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["auth", "core"],
+    "custom_links": {
+        "auth": [
+            {"name": "Make Messages", "url": "make_messages", "icon": "fas fa-comments", "permissions": ["auth.view_user"]},
+        ]
+    },
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # UI tweaks: https://django-jazzmin.readthedocs.io/ui_tweaks/
+    "ui_tweaks": {
+        "theme": "cyborg",
+        "dark_mode_theme": None,
+        "dark_mode_switch": True,
+        "sidebar": "navbar-dark bg-primary",
+        "navbar": "navbar-dark bg-dark",
+        "brand_colour": "navbar-dark bg-primary",
+        "accent": "accent-primary",
+        "no_navbar_border": False,
+        "navbar_fixed": True,
+        "sidebar_fixed": True,
+        "footer_fixed": True,
+        "buttons": {
+            "style": "primary",
+        },
+        "body_small_text": False,
+        "navbar_small_text": False,
+        "sidebar_small_text": False,
+        "footer_small_text": False,
+    },
+}
+
