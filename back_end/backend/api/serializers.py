@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, Sector, Interaction, Feedback, AdminUser
+from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class UserTokenSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -10,11 +11,25 @@ class UserTokenSerializer(TokenObtainPairSerializer):
         token['email'] = user.email
 
         return token
-
+    
+class SuperUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+        
+    def create(self, validated_data):
+        SuperUser = self.Meta.model.objects.create_user(**validated_data)
+        return SuperUser
+    
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'join_date', 'groups', 'user_permissions']
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
 
 class SectorSerializer(serializers.ModelSerializer):
     class Meta:
