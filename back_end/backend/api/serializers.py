@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User, Sector, Interaction, Feedback, AdminUser
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class UserTokenSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -23,13 +24,40 @@ class SuperUserSerializer(serializers.ModelSerializer):
         return SuperUser
     
 class UserSerializer(serializers.ModelSerializer):
+
+    group_names = serializers.ListField(
+        child=serializers.CharField(max_length=80), 
+        write_only=True
+    )
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'join_date', 'groups', 'user_permissions']
+        fields = ['id', 'username', 'email', 'join_date', 'groups', 'group_names']
 
     def create(self, validated_data):
+        group_names = validated_data.pop('group_names', [])
         user = User.objects.create_user(**validated_data)
+        
+        for group_name in group_names:
+            group, created = Group.objects.get_or_create(name=group_name)
+            user.groups.add(group)
+        
         return user
+    
+    def update(self, instance, validated_data):
+        group_names = validated_data.pop('group_names', [])
+
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.join_date = validated_data.get('join_date', instance.join_date)
+
+        instance.groups.clear()
+        for group_name in group_names:
+            group, created = Group.objects.get_or_create(name=group_name)
+            instance.groups.add(group)
+
+        instance.save()
+        return instance
 
 class SectorSerializer(serializers.ModelSerializer):
     class Meta:

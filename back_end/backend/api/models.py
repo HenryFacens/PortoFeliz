@@ -7,17 +7,17 @@ class User(AbstractUser):
 
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='custom_user_set',  # Mudando o related_name
+        related_name='custom_user_groups',  # Mudando o related_name para grupos
         blank=True,
         help_text=('The groups this user belongs to. A user will get all permissions granted to each of their groups.'),
-        related_query_name='user',
+        related_query_name='user_group',
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='custom_user_set',  # Mudando o related_name
+        related_name='custom_user_permissions',  # Mudando o related_name para permissões
         blank=True,
         help_text=('Specific permissions for this user.'),
-        related_query_name='user',
+        related_query_name='user_permission',
     )
 
 class Sector(models.Model):

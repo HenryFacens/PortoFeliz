@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import View
-from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from .models import User, Sector, Interaction, Feedback, AdminUser
 from .models import Sector, Interaction, Feedback, AdminUser
 from .serializers import UserSerializer, SectorSerializer, InteractionSerializer, FeedbackSerializer, AdminUserSerializer, SuperUserSerializer
@@ -8,7 +10,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from api import serializers as api_serializers
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
-
 class UserTokenSerializer(TokenObtainPairView):
     serializer_class = api_serializers.UserTokenSerializer
 
@@ -31,6 +32,16 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    @action(detail=True, methods=['put'], permission_classes=[IsAuthenticated])
+    def update_permissions(self, request, pk=None):
+        user = self.get_object()
+        serializer = UserSerializer(user, data=request.data, partial=False)  # Full update
+        if serializer.is_valid():
+            serializer.update(user, serializer.validated_data)
+            return Response({'status': 'permissions updated'}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SectorViewSet(viewsets.ModelViewSet):
     queryset = Sector.objects.all()
